@@ -6,7 +6,7 @@
 //  Copyright © 2019 Matthew. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class TaskList {
     var tasks = [Task]()
@@ -25,5 +25,11 @@ class TaskList {
     
     func count() -> Int {
         return tasks.count
+    }
+    
+    func remove(_ task: Task) {
+        if let index = tasks.index(of: task) {
+            tasks.remove(at: index)
+        }
     }
 }

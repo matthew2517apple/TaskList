@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ebH-R6-dup">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ebH-R6-dup">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,17 +23,29 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dpO-rg-nRi">
-                                    <rect key="frame" x="151.5" y="0.0" width="71" height="33"/>
+                                    <rect key="frame" x="152" y="0.0" width="71" height="32"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <state key="normal" title="Add Task"/>
                                     <connections>
                                         <action selector="addNewTask:" destination="ebH-R6-dup" eventType="touchUpInside" id="ugD-mO-cWj"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCf-hA-IgA">
+                                    <rect key="frame" x="52" y="1" width="30" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <state key="normal" title="Edit"/>
+                                    <connections>
+                                        <action selector="toggleEditingMode:" destination="ebH-R6-dup" eventType="touchUpInside" id="Dse-IM-r0e"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstItem="dpO-rg-nRi" firstAttribute="leading" secondItem="hCf-hA-IgA" secondAttribute="trailing" constant="70" id="4qz-0W-7Xn"/>
                                 <constraint firstItem="dpO-rg-nRi" firstAttribute="top" secondItem="afR-P4-Mas" secondAttribute="top" id="BG8-K9-9s5"/>
+                                <constraint firstItem="hCf-hA-IgA" firstAttribute="centerY" secondItem="dpO-rg-nRi" secondAttribute="centerY" id="LsO-Cg-vlV"/>
+                                <constraint firstItem="hCf-hA-IgA" firstAttribute="top" secondItem="afR-P4-Mas" secondAttribute="top" constant="1" id="h2w-sv-ajj"/>
+                                <constraint firstAttribute="bottom" secondItem="hCf-hA-IgA" secondAttribute="bottom" constant="13" id="pAg-59-i1L"/>
                                 <constraint firstItem="dpO-rg-nRi" firstAttribute="centerX" secondItem="afR-P4-Mas" secondAttribute="centerX" id="t7j-fE-DJH"/>
                             </constraints>
                         </view>
@@ -100,7 +112,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0Z-o9-l68">
-                                <rect key="frame" x="161" y="266" width="54" height="42"/>
+                                <rect key="frame" x="160.5" y="266" width="54" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="plk-QL-gFi"/>
                                 </constraints>

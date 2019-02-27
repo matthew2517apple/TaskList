@@ -20,11 +20,10 @@ class DetailViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        taskDescription.text = task.description
+        taskDescription.text = task.sDescription
         
         let dateString = Formatting.dateFormatter.string(from: task.dateCreated)
         taskDateCreated.text = "\(dateString)"
     }
-    
-    
+
 }

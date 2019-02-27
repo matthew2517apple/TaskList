@@ -6,14 +6,15 @@
 //  Copyright © 2019 Matthew. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-class Task {
-    var description: String
+class Task: NSObject {
+    // the leading s is a 'sigil' indicating the variable is of type 'string':
+    var sDescription: String
     var dateCreated: Date
     
     init(description: String, dateCreated: Date = Date()) {
-        self.description = description
+        self.sDescription = description
         self.dateCreated = dateCreated
     }
 }
