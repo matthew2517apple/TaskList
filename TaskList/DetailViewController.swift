@@ -16,6 +16,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var taskDateCreated: UILabel!
     
     @IBAction func goBack(_ sender: Any) {
+        //print("GOING BACK")
         dismiss(animated: true, completion: nil)
     }
     

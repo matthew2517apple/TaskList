@@ -16,8 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // The following code relies on answers from this Stack Overflow:
+        // https://stackoverflow.com/questions/31142785/how-to-access-a-view-controller-that-is-not-the-root-view-controller-from-appdel?rq=1
+        // (The use of "childViewControllers" is my own)
         let taskList = TaskList()
-        let tableViewController = window?.rootViewController as! TaskTableViewController
+        //let tableViewController = window?.rootViewController as! TaskTableViewController
+        let mainViewController = self.window!.rootViewController!
+        let tableViewController  = mainViewController.childViewControllers[1] as! TaskTableViewController
         tableViewController.taskModel = taskList
         
         return true

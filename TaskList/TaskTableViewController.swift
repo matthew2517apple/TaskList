@@ -10,10 +10,14 @@ import UIKit
 
 class TaskTableViewController: UITableViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
     var taskModel: TaskList!
     
     @IBAction func addNewTask(_ sender: Any) {
-        let inputAlert = UIAlertController(title: "Enter Task", message: "Describe what you need to do", preferredStyle: .alert)
+        let inputAlert = UIAlertController(title: "Add Place", message: "Describe the place you want to add", preferredStyle: .alert)
         inputAlert.addTextField(configurationHandler: nil)
         inputAlert.addAction(UIAlertAction(title: "Add", style: .default, handler: {(action: UIAlertAction) in
             if let description = inputAlert.textFields?[0].text, description != "" {
@@ -52,7 +56,7 @@ class TaskTableViewController: UITableViewController {
         
         if let realDate = task?.dateCreated {
             let dateString = Formatting.dateFormatter.string(from: realDate)
-            cell.detailTextLabel?.text = "Created at \(dateString)"
+            cell.detailTextLabel?.text = "Added at \(dateString)"
         }
 
         return cell
@@ -74,7 +78,7 @@ class TaskTableViewController: UITableViewController {
             let item = taskModel.tasks[indexPath.row]
             
             let alertTitle = "Delete"
-            let alertMessage = "Are you sure you want to delete this task?"
+            let alertMessage = "Are you sure you want to delete this place?"
             
             let ac = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .actionSheet)
             
