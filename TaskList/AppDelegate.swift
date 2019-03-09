@@ -12,6 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var wishlistController: TaskTableViewController = TaskTableViewController()
+    var mapViewController: MapViewController = MapViewController()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -23,8 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let taskList = TaskList()
         //let tableViewController = window?.rootViewController as! TaskTableViewController
         let mainViewController = self.window!.rootViewController!
-        let tableViewController  = mainViewController.childViewControllers[1] as! TaskTableViewController
-        tableViewController.taskModel = taskList
+        mapViewController = mainViewController.childViewControllers[0] as! MapViewController
+        wishlistController  = mainViewController.childViewControllers[1] as! TaskTableViewController
+        wishlistController.taskModel = taskList
         
         return true
     }

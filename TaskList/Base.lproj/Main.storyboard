@@ -93,53 +93,62 @@
         <!--Map-->
         <scene sceneID="CAu-RA-zVO">
             <objects>
-                <viewController id="vDU-Ph-GEb" customClass="MapViewController" sceneMemberID="viewController">
+                <viewController id="vDU-Ph-GEb" customClass="MapViewController" customModule="TaskList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uMX-SQ-YFO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NJl-7o-CWu">
-                                <rect key="frame" x="16" y="179" width="343" height="439.5"/>
-                            </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a5m-Kr-yox">
-                                <rect key="frame" x="117.5" y="20" width="140" height="30"/>
-                                <state key="normal" title="Add current location"/>
+                                <rect key="frame" x="91" y="20" width="193" height="30"/>
+                                <state key="normal" title="Long press to add a new pin"/>
+                                <connections>
+                                    <action selector="addCurrentLocation:" destination="vDU-Ph-GEb" eventType="touchUpInside" id="Fyx-iJ-wIP"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gru-61-xse">
-                                <rect key="frame" x="166.5" y="85" width="42" height="20.5"/>
+                                <rect key="frame" x="166.5" y="58" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gY-h2-x7Y">
-                                <rect key="frame" x="166.5" y="626.5" width="42" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3gY-h2-x7Y">
+                                <rect key="frame" x="136.5" y="577.5" width="102" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NJl-7o-CWu">
+                                <rect key="frame" x="16" y="114" width="343" height="455"/>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="a5m-Kr-yox" firstAttribute="top" secondItem="1Lv-WB-CZu" secondAttribute="top" id="2Cj-Kz-D3r"/>
-                            <constraint firstItem="gru-61-xse" firstAttribute="top" secondItem="a5m-Kr-yox" secondAttribute="bottom" constant="35" id="3YC-qO-plt"/>
-                            <constraint firstItem="NJl-7o-CWu" firstAttribute="leading" secondItem="1Lv-WB-CZu" secondAttribute="leading" constant="16" id="FAM-NT-Wtb"/>
-                            <constraint firstItem="NJl-7o-CWu" firstAttribute="top" secondItem="gru-61-xse" secondAttribute="bottom" constant="73.5" id="KTC-Io-YMN"/>
-                            <constraint firstAttribute="bottom" secondItem="3gY-h2-x7Y" secondAttribute="bottom" constant="20" id="Qec-EL-UKY"/>
-                            <constraint firstItem="3gY-h2-x7Y" firstAttribute="top" secondItem="NJl-7o-CWu" secondAttribute="bottom" constant="8" id="YJm-66-0x6"/>
-                            <constraint firstItem="3gY-h2-x7Y" firstAttribute="centerX" secondItem="uMX-SQ-YFO" secondAttribute="centerX" id="eST-kw-V4I"/>
-                            <constraint firstItem="NJl-7o-CWu" firstAttribute="centerX" secondItem="uMX-SQ-YFO" secondAttribute="centerX" id="iSu-4h-i12"/>
-                            <constraint firstItem="a5m-Kr-yox" firstAttribute="centerX" secondItem="uMX-SQ-YFO" secondAttribute="centerX" id="ixV-hj-RoE"/>
-                            <constraint firstItem="gru-61-xse" firstAttribute="centerX" secondItem="uMX-SQ-YFO" secondAttribute="centerX" id="m0V-tK-N84"/>
-                            <constraint firstItem="3gY-h2-x7Y" firstAttribute="top" secondItem="NJl-7o-CWu" secondAttribute="bottom" constant="8" id="rC2-yK-iXP"/>
-                            <constraint firstItem="1Lv-WB-CZu" firstAttribute="trailing" secondItem="NJl-7o-CWu" secondAttribute="trailing" constant="16" id="xmT-IA-Y2Y"/>
+                            <constraint firstItem="gru-61-xse" firstAttribute="top" secondItem="a5m-Kr-yox" secondAttribute="bottom" constant="8" id="2lW-5Z-cER"/>
+                            <constraint firstItem="1Lv-WB-CZu" firstAttribute="bottom" secondItem="3gY-h2-x7Y" secondAttribute="bottom" constant="20" id="8X5-iY-ubF"/>
+                            <constraint firstItem="3gY-h2-x7Y" firstAttribute="top" secondItem="NJl-7o-CWu" secondAttribute="bottom" constant="8.5" id="Prj-2r-aHE"/>
+                            <constraint firstItem="a5m-Kr-yox" firstAttribute="top" secondItem="1Lv-WB-CZu" secondAttribute="top" id="QSY-S1-exY"/>
+                            <constraint firstItem="3gY-h2-x7Y" firstAttribute="centerX" secondItem="uMX-SQ-YFO" secondAttribute="centerX" id="RnX-T2-biD"/>
+                            <constraint firstItem="NJl-7o-CWu" firstAttribute="top" secondItem="gru-61-xse" secondAttribute="bottom" constant="35" id="c8T-yN-RBT"/>
+                            <constraint firstItem="NJl-7o-CWu" firstAttribute="leading" secondItem="1Lv-WB-CZu" secondAttribute="leading" constant="16" id="gze-hA-Oxc"/>
+                            <constraint firstItem="1Lv-WB-CZu" firstAttribute="trailing" secondItem="NJl-7o-CWu" secondAttribute="trailing" constant="16" id="poN-cJ-UTd"/>
+                            <constraint firstItem="NJl-7o-CWu" firstAttribute="centerX" secondItem="uMX-SQ-YFO" secondAttribute="centerX" id="qw3-f9-oc2"/>
+                            <constraint firstItem="NJl-7o-CWu" firstAttribute="centerX" secondItem="uMX-SQ-YFO" secondAttribute="centerX" id="soi-zc-g0f"/>
+                            <constraint firstItem="a5m-Kr-yox" firstAttribute="centerX" secondItem="uMX-SQ-YFO" secondAttribute="centerX" id="ueD-47-oEq"/>
+                            <constraint firstItem="gru-61-xse" firstAttribute="centerX" secondItem="uMX-SQ-YFO" secondAttribute="centerX" id="yr1-kZ-STo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1Lv-WB-CZu"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" id="R3Y-aY-HXy"/>
+                    <connections>
+                        <outlet property="addPinButton" destination="a5m-Kr-yox" id="o4Y-Ra-yTB"/>
+                        <outlet property="locationText" destination="3gY-h2-x7Y" id="s05-vN-qLs"/>
+                        <outlet property="mapView" destination="NJl-7o-CWu" id="ipl-YS-sx6"/>
+                        <outlet property="userAlertLabel" destination="gru-61-xse" id="R6y-Ry-4T1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Osh-nh-Aed" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="436" y="665"/>
+            <point key="canvasLocation" x="436" y="664.31784107946032"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="LjV-gg-rJD">
@@ -206,6 +215,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="nc4-c7-eUX" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yLs-fy-aqj">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

@@ -21,7 +21,7 @@ class DetailViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        taskDescription.text = task.sDescription
+        taskDescription.text = task.name
         
         let dateString = Formatting.dateFormatter.string(from: task.dateCreated)
         taskDateCreated.text = "\(dateString)"

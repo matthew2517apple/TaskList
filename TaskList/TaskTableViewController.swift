@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class TaskTableViewController: UITableViewController {
     
@@ -16,8 +17,17 @@ class TaskTableViewController: UITableViewController {
     
     var taskModel: TaskList!
     
+    func addNewLocation(name: String, annotation: MKPointAnnotation) {
+        let place = Task(name: name, annotation: annotation)
+        let index = self.taskModel.add(place)
+        let indexPath = IndexPath(row: index, section: 0)
+        self.tableView.insertRows(at: [indexPath], with: .automatic)
+    }
+    
     @IBAction func addNewTask(_ sender: Any) {
-        let inputAlert = UIAlertController(title: "Add Place", message: "Describe the place you want to add", preferredStyle: .alert)
+        print("This Button has been deprecated.")
+        return
+        /*let inputAlert = UIAlertController(title: "Add Place", message: "Describe the place you want to add", preferredStyle: .alert)
         inputAlert.addTextField(configurationHandler: nil)
         inputAlert.addAction(UIAlertAction(title: "Add", style: .default, handler: {(action: UIAlertAction) in
             if let description = inputAlert.textFields?[0].text, description != "" {
@@ -30,6 +40,7 @@ class TaskTableViewController: UITableViewController {
         ))
         inputAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(inputAlert, animated: true)
+        */
     }
     
     // From chapter 11 of Big Nerd Ranch iOS Programming:
@@ -52,7 +63,7 @@ class TaskTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = taskModel.getTask(at: indexPath.row)
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        cell.textLabel?.text = task?.sDescription
+        cell.textLabel?.text = task?.name
         
         if let realDate = task?.dateCreated {
             let dateString = Formatting.dateFormatter.string(from: realDate)
@@ -88,6 +99,12 @@ class TaskTableViewController: UITableViewController {
             let deleteAction = UIAlertAction(title: "Remove", style: .destructive, handler: {(action) -> Void in
                 self.taskModel.remove(item)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
+                
+                // The next line of code is from:
+                // https://stackoverflow.com/questions/32092243/global-variable-in-appdelegate-in-swift/32092335
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                // Also delete the associated pin (annotation) on the MapView:
+                appDelegate.mapViewController.mapView.removeAnnotation(item.annotation)
             })
             ac.addAction(deleteAction)
             

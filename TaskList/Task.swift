@@ -7,14 +7,16 @@
 //
 
 import UIKit
+import MapKit
 
 class Task: NSObject {
-    // the leading s is a 'sigil' indicating the variable is of type 'string':
-    var sDescription: String
+    var name: String
     var dateCreated: Date
+    var annotation: MKPointAnnotation
     
-    init(description: String, dateCreated: Date = Date()) {
-        self.sDescription = description
+    init(name: String, annotation: MKPointAnnotation, dateCreated: Date = Date()) {
+        self.name = name
         self.dateCreated = dateCreated
+        self.annotation = annotation
     }
 }
