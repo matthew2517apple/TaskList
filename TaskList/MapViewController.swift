@@ -27,8 +27,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         return locationString
     }
     
-    
-    
     func addPinToMap(coordinate: CLLocationCoordinate2D) {
         let annotation = MKPointAnnotation()
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
@@ -42,7 +40,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         // The next line of code is from:
         // https://stackoverflow.com/questions/32092243/global-variable-in-appdelegate-in-swift/32092335
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        for eachPlace in appDelegate.wishlistController.taskModel.tasks {
+        for eachPlace in appDelegate.wishlistController.wishList.placesArray {
             let otherCoordinate = eachPlace.annotation.coordinate
             // If either lat or lon is different, the location is new:
             sameLat = true
@@ -69,7 +67,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 if error == nil {
                     let placemark = placeMarks![0]
                     name = self.reverseGeocodeComplete(location: placemark)
-                    annotation.title = "I WANT to go to \(name)"
+                    annotation.title = "\(name)"
+                    annotation.subtitle = "Not Visited"
                     
                     //self.addPinToWishlist(name: name, annotation: annotation)
                     self.activePinName = name
@@ -81,7 +80,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                     self.addPinButton.isEnabled = true
                 } else {
                     print("ERROR in reverseGeocodeLocation; could not add.")
-                    self.userAlertLabel.text="Could not add this location."
+                    self.userAlertLabel.text="Could not add this location; check your internet connection."
                 }
             })
         }
@@ -110,13 +109,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     func tryToDeleteActivePin() {
         // Don't delete it if it has been added to the wishlist.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        for eachPlace in appDelegate.wishlistController.taskModel.tasks {
+        for eachPlace in appDelegate.wishlistController.wishList.placesArray {
             if eachPlace.annotation == activePinAnnotation {
                 return;
             }
         }
         
-        // If we got this far, the most recently added pin is not in the wishlist:
+        // If we got this far, the most recently added pin is not in the wishlist,
+        // and thus should be deleted:
         mapView.removeAnnotation(activePinAnnotation)
     }
     
@@ -158,6 +158,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         print("mapView viewDidLoad")
         super.viewDidLoad()
         addPinButton.isEnabled = false
+        userAlertLabel.text = ""
+        locationText.text = ""
         locationManager.delegate = self
         print("ABOUT TO REQUEST AUTHORIZATION")
         locationManager.requestWhenInUseAuthorization()
@@ -190,10 +192,22 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
     }
     
+    // The following function could theoretically slow down with enough pins added.
+    // In that case, this code could be useful:
+    // https://www.hackingwithswift.com/example-code/location/how-to-add-annotations-to-mkmapview-using-mkpointannotation-and-mkpinannotationview
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKPointAnnotation {
             let pinAnnotation = MKPinAnnotationView()
-            pinAnnotation.pinTintColor = UIColor.red
+            if let subtitle = annotation.subtitle {
+                print("Subtitle: \(subtitle!) ")
+                print("Prefix: \(subtitle!.prefix(3))")
+                if subtitle!.prefix(3) == "Not" {
+                    pinAnnotation.pinTintColor = UIColor.yellow
+                } else {
+                    pinAnnotation.pinTintColor = UIColor.green
+                }
+
+            }
             pinAnnotation.annotation = annotation
             pinAnnotation.canShowCallout = true
             return pinAnnotation

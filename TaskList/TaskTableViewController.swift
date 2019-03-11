@@ -11,36 +11,44 @@ import MapKit
 
 class TaskTableViewController: UITableViewController {
     
+    var wishList: PlaceList!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    var taskModel: TaskList!
-    
     func addNewLocation(name: String, annotation: MKPointAnnotation) {
-        let place = Task(name: name, annotation: annotation)
-        let index = self.taskModel.add(place)
+        let place = Place(name: name, annotation: annotation)
+        let index = self.wishList.add(place)
         let indexPath = IndexPath(row: index, section: 0)
         self.tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
-    @IBAction func addNewTask(_ sender: Any) {
-        print("This Button has been deprecated.")
-        return
-        /*let inputAlert = UIAlertController(title: "Add Place", message: "Describe the place you want to add", preferredStyle: .alert)
-        inputAlert.addTextField(configurationHandler: nil)
-        inputAlert.addAction(UIAlertAction(title: "Add", style: .default, handler: {(action: UIAlertAction) in
-            if let description = inputAlert.textFields?[0].text, description != "" {
-                let task = Task(description: description)
-                let index = self.taskModel.add(task)
-                let indexPath = IndexPath(row: index, section: 0)
-                self.tableView.insertRows(at: [indexPath], with: .automatic)
-            }
+    @IBAction func showOnMapButton(_ sender: Any) {
+        //let coordinate = this.
+        //zoomToLocation()
+    }
+    
+    
+    func zoomToLocation(place: Place) {
+        let coordinate = place.annotation.coordinate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //let firstPlace: Place = wishList.placesArray[0]
+        //let coordinate = firstPlace.annotation.coordinate
+        
+        // Switch to a different tab:
+        if let tabBarController = appDelegate.mainViewController as? UITabBarController {
+            tabBarController.selectedIndex = 0
+        } else {
+            print("Not a tab controller")
         }
-        ))
-        inputAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(inputAlert, animated: true)
-        */
+        
+        // Display location name:
+        appDelegate.mapViewController.locationText.text = "\(place.name)"
+        
+        let viewRegion = MKCoordinateRegionMakeWithDistance(coordinate, 150000, 150000)
+        appDelegate.mapViewController.mapView.setRegion(viewRegion, animated: true)
+        
     }
     
     // From chapter 11 of Big Nerd Ranch iOS Programming:
@@ -57,39 +65,53 @@ class TaskTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskModel.count()
+        return wishList.count()
+    }
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        
+        var place: Place!
+        place = wishList.getPlace(at: indexPath.row)
+        zoomToLocation(place: place)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let task = taskModel.getTask(at: indexPath.row)
+        var place: Place!
+        place = wishList.getPlace(at: indexPath.row)
         let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
-        cell.textLabel?.text = task?.name
+        cell.textLabel?.text = place?.name
         
-        if let realDate = task?.dateCreated {
-            let dateString = Formatting.dateFormatter.string(from: realDate)
-            cell.detailTextLabel?.text = "Added at \(dateString)"
+        cell.accessoryType = UITableViewCellAccessoryType.detailButton
+        
+        if place.hasBeenVisited {
+            cell.detailTextLabel?.text = "Visited"
+            cell.backgroundColor = UIColor.green
+            //place.annotation.tint
+        } else {
+            cell.detailTextLabel?.text = "Not Visited"
+            cell.backgroundColor = UIColor.yellow
         }
 
         return cell
     }
     
-    override func prepare(for segue:UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
-            let detailView = segue.destination as! DetailViewController
-            let rowsSelected = tableView.indexPathsForSelectedRows
-            let firstRow = rowsSelected?[0]
-            let task = taskModel.getTask(at: (firstRow?.row)!)
-            detailView.task = task
-        }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var place: Place!
+        place = wishList.getPlace(at: indexPath.row)
+
+        // Toggle the database value (also updates mapView):
+        place.toggleVisited()
+        // Reload tableView to update (and thus toggle) the tableView display:
+        tableView.reloadData()
     }
     
     // Based on the code from chapter 11 of Big Nerd Ranch iOS Programming:
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let item = taskModel.tasks[indexPath.row]
+            let item = wishList.placesArray[indexPath.row]
             
             let alertTitle = "Delete"
-            let alertMessage = "Are you sure you want to delete this place?"
+            let alertMessage = "Remove \(item.name)?"
             
             let ac = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .actionSheet)
             
@@ -97,7 +119,7 @@ class TaskTableViewController: UITableViewController {
             ac.addAction(cancelAction)
             
             let deleteAction = UIAlertAction(title: "Remove", style: .destructive, handler: {(action) -> Void in
-                self.taskModel.remove(item)
+                self.wishList.remove(item)
                 self.tableView.deleteRows(at: [indexPath], with: .automatic)
                 
                 // The next line of code is from:

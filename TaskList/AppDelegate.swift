@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var mainViewController: UIViewController = UIViewController()
     var wishlistController: TaskTableViewController = TaskTableViewController()
     var mapViewController: MapViewController = MapViewController()
 
@@ -22,12 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // The following code relies on answers from this Stack Overflow:
         // https://stackoverflow.com/questions/31142785/how-to-access-a-view-controller-that-is-not-the-root-view-controller-from-appdel?rq=1
         // (The use of "childViewControllers" is my own)
-        let taskList = TaskList()
+        let wishList = PlaceList()
         //let tableViewController = window?.rootViewController as! TaskTableViewController
-        let mainViewController = self.window!.rootViewController!
+        mainViewController = self.window!.rootViewController!
         mapViewController = mainViewController.childViewControllers[0] as! MapViewController
         wishlistController  = mainViewController.childViewControllers[1] as! TaskTableViewController
-        wishlistController.taskModel = taskList
+        wishlistController.wishList = wishList
         
         return true
     }
